@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Bilingual Singing Voice Synthesis
+  <meta name="keywords" content="BiSinger">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SD-EVG: Stable Diffusion-Enhanced Voice Generation</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-KJV8E6F189"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-KJV8E6F189');
+  </script> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
+    <div class="navbar-menu">
+      <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+        <a class="navbar-item" href="">
+          <span class="icon">
+            <i class="fas fa-home"></i>
+          </span>
+        </a>
+
+        <!-- <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div> -->
+      </div>
+
+    </div>
+  </nav>
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title" style="width: 100vw;">Bridging Facial Imagery and Vocal Reality:<br> Stable Diffusion-Enhanced Voice Generation</h1>
+            <div class="is-size-5 publication-authors">
+            </span>
+              <span class="author-block"><em>Anonymous Submission</em></span>
+            </div>
+
+            <!-- <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>†</sup>Corresponding author: <a href="mailto:ming.li369@duke.edu">ming.li369@duke.edu</a></span> -->
+          <!-- code will be available once published -->
+          <div class="column has-text-centered">
+            <span class="link-block">
+          </div>
+            <!-- 
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2011.12948"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/google/nerfies"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/google/nerfies/releases/tag/0.1"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+            </div>
+               -->
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class= "column">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Voice generation in speech synthesis is challenging yet holds potential for versatile voices needed in entertainment and research. One primary obstacle in this area is the subjective nature and lack of diversity of voice descriptions. Our research seeks to represent emotions and speaker identities more objectively and diversely to address this issue. We introduce Stable Diffusion-Enhanced Voice Generation (SD-EVG), leveraging Stable Diffusion to generate realistic facial images for expressive voice synthesis. SD-EVG uses a transformer encoder, trained on multimodal features extracted by foundation models, and a fine-tuned Stable Diffusion decoder to imagine a speaker's face from their voice. SD-EVG also incorporates a KNN-based method that maps the identity and style of facial features to speech for voice generation. Experiments show voices from imaginary facial data more favorably capture style than text-based methods for the same descriptions.
+            </p>
+          </div>
+          </div>
+        </div>
+        <div class="columns is-centered has-text-centered">
+          <div class= "column">
+            <h2 class="title is-3">Overview</h2>
+            <div class="content has-text-justified">
+                <img src="./static/img/overview.png" alt="Overview of SD-EVG" style="width: 100%;"/>
+            </div>
+            </div>
+            </div>
+          </div>
+  </section>
+  <section class="hero is-light is-small">
+    <div class="hero-body">
+      <div class="container hero-body">
+        <h2 class="title is-3">Demo Samples</h2>
+        <h3 class="title is-4">1. Voice-to-Face Synthesis</h3>
+        <table class="table is-fullwidth" style="table-layout: fixed">
+          <tr>
+            <th>Speech Utternace</th>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Face</th>
+            <th>Speech Utternace</th>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Face</th>
+          </tr>
+          <tr>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/v2f_0.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <img src="./static/img/v2f_0.png" alt="Voice-to-Face Synthesis" style="width: 300px;"/>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/v2f_1.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <img src="./static/img/v2f_1.png" alt="Voice-to-Face Synthesis" style="width: 300px;"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/v2f_2.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <img src="./static/img/v2f_2.png" alt="Voice-to-Face Synthesis" style="width: 300px;"/>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/v2f_3.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <img src="./static/img/v2f_3.png" alt="Voice-to-Face Synthesis" style="width: 300px;"/>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/v2f_4.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <img src="./static/img/v2f_4.png" alt="Voice-to-Face Synthesis" style="width: 300px;"/>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/v2f_5.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <img src="./static/img/v2f_5.png" alt="Voice-to-Face Synthesis" style="width: 300px;"/>
+            </td>
+          </tr>
+        </table>
+        <h3 class="title is-4">2. Face-to-Voice Synthesis</h3>
+        <p class="title is-5" style="font-weight: bold; color: #209cee;">
+          Text: <span style="font-size: 1.25em;">However, he held out little hope that the Government would take action.</span>
+        </p>
+        <table class="table is-fullwidth" style="table-layout: fixed">
+          <tr>
+            <th>Face</th>
+            <th>FACE-TTS</th>
+            <th>Grad-StyleSpeech</th>
+            <th>Face-StyleSpeech</th>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Voice by SD-EVG</th>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <img src="./static/img/f2v_1.jpg" alt="Face-to-Voice Synthesis" style="width: 200px;"/>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos1-facetts.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos1-grad-stylespeech.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos1-face-stylespeech.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+            <audio controls style="width: 100%;">
+              <source src="./static/audio/f2v_2.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </td>
+          </tr>
+        </table>
+        <p class="title is-5" style="font-weight: bold; color: #209cee;">
+          Text: <span style="font-size: 1.25em;">It's great, because it takes a lot of pressure off the players.</span>
+        </p>
+        <table class="table is-fullwidth" style="table-layout: fixed">
+          <tr>
+            <th>Face</th>
+            <th>FACE-TTS</th>
+            <th>Grad-StyleSpeech</th>
+            <th>Face-StyleSpeech</th>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Voice by SD-EVG</th>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <img src="./static/img/f2v_2.jpg" alt="Face-to-Voice Synthesis" style="width: 200px;"/>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos2-facetts.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos2-grad-stylespeech.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos2-face-stylespeech.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+            <audio controls style="width: 100%;">
+              <source src="./static/audio/f2v_2.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </td>
+          </tr>
+        </table>
+        <p class="title is-5" style="font-weight: bold; color: #209cee;">
+          Text: <span style="font-size: 1.25em;">They made clear that they are not interested in Government assistance.</span>
+        </p>
+        <table class="table is-fullwidth" style="table-layout: fixed">
+          <tr>
+            <th>Face</th>
+            <th>FACE-TTS</th>
+            <th>Grad-StyleSpeech</th>
+            <th>Face-StyleSpeech</th>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Voice by SD-EVG</th>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <img src="./static/img/f2v_3.jpg" alt="Face-to-Voice Synthesis" style="width: 200px;"/>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos3-facetts.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos3-grad-stylespeech.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos3-face-stylespeech.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+            <audio controls style="width: 100%;">
+              <source src="./static/audio/f2v_3.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </td>
+          </tr>
+        </table>
+        <p class="title is-5" style="font-weight: bold; color: #209cee;">
+          Text: <span style="font-size: 1.25em;">We have always maintained that we would never abandon Scottish football.</span>
+        </p>
+        <table class="table is-fullwidth" style="table-layout: fixed">
+          <tr>
+            <th>Face</th>
+            <th>FACE-TTS</th>
+            <th>Grad-StyleSpeech</th>
+            <th>Face-StyleSpeech</th>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Voice by SD-EVG</th>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <img src="./static/img/f2v_11.png" alt="Face-to-Voice Synthesis" style="width: 200px;"/>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos11-facetts.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos11-grad-stylespeech.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos11-face-stylespeech.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+            <audio controls style="width: 100%;">
+              <source src="./static/audio/f2v_11.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </td>
+          </tr>
+        </table>
+        <p class="title is-5" style="font-weight: bold; color: #209cee;">
+          Text: <span style="font-size: 1.25em;">We must provide a long-term solution to tackle this attitude.</span>
+        </p>
+        <table class="table is-fullwidth" style="table-layout: fixed">
+          <tr>
+            <th>Face</th>
+            <th>FACE-TTS</th>
+            <th>Grad-StyleSpeech</th>
+            <th>Face-StyleSpeech</th>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Voice by SD-EVG</th>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <img src="./static/img/f2v_4.jpg" alt="Face-to-Voice Synthesis" style="width: 200px;"/>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos4-facetts.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos4-grad-stylespeech.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos4-face-stylespeech.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+            <audio controls style="width: 100%;">
+              <source src="./static/audio/f2v_4.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </td>
+          </tr>
+        </table>
+        <p class="title is-5" style="font-weight: bold; color: #209cee;">
+          Text: <span style="font-size: 1.25em;">Throughout the centuries people have explained the rainbow in various ways.</span>
+        </p>
+        <table class="table is-fullwidth" style="table-layout: fixed">
+          <tr>
+            <th>Face</th>
+            <th>FACE-TTS</th>
+            <th>Grad-StyleSpeech</th>
+            <th>Face-StyleSpeech</th>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Voice by SD-EVG</th>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <img src="./static/img/f2v_12.png" alt="Face-to-Voice Synthesis" style="width: 200px;"/>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos12-facetts.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos12-grad-stylespeech.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/mos12-face-stylespeech.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+            <td>
+            <audio controls style="width: 100%;">
+              <source src="./static/audio/f2v_12.wav" type="audio/wav">
+              Your browser does not support the audio element.
+            </audio>
+          </td>
+          </tr>
+        </table>
+        <h3 class="title is-4">3. Emotional Speech Synthesis</h3>
+        <p class="title is-5" style="font-weight: bold; color: #209cee;">Emotion: Happy</p>
+        <table class="table is-fullwidth" style="table-layout: fixed">
+          <tr>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Face</th>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Speech Utternace</th>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <img src="./static/img/emo_0002.png" alt="Emotional voice synthesis" style="width: 300px;"/>
+            </td>
+            <td style="text-align: center; align-items: center; vertical-align: middle;">
+              <p class="title is-5" style="font-weight: bold; color: #209cee;">Text: We've surpassed every goal set before us!</p>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/emo_0002.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+        </table>
+        <p class="title is-5" style="font-weight: bold; color: #209cee;">Emotion: Sad</p>
+        <table class="table is-fullwidth" style="table-layout: fixed">
+          <tr>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Face</th>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Speech Utternace</th>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <img src="./static/img/emo_0003.png" alt="Emotional voice synthesis" style="width: 300px;"/>
+            </td>
+            <td style="text-align: center; align-items: center; vertical-align: middle;">
+              <p class="title is-5" style="font-weight: bold; color: #209cee;">Text: Their absence is a shadow over our hearts.              </p>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/emo_0003.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+        </table>
+        <p class="title is-5" style="font-weight: bold; color: #209cee;">Emotion: Angry</p>
+        <table class="table is-fullwidth" style="table-layout: fixed">
+          <tr>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Face</th>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Speech Utternace</th>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <img src="./static/img/emo_0015.png" alt="Emotional voice synthesis" style="width: 300px;"/>
+            </td>
+            <td style="text-align: center; align-items: center; vertical-align: middle;">
+              <p class="title is-5" style="font-weight: bold; color: #209cee;">Text: Such blatant disregard for ethics cannot go unchecked!</p>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/emo_0015.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+        </table>
+        <p class="title is-5" style="font-weight: bold; color: #209cee;">Emotion: Surprise</p>
+        <table class="table is-fullwidth" style="table-layout: fixed">
+          <tr>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Face</th>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Speech Utternace</th>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <img src="./static/img/emo_0014.png" alt="Emotional voice synthesis" style="width: 300px;"/>
+            </td>
+            <td style="text-align: center; align-items: center; vertical-align: middle;">
+              <p class="title is-5" style="font-weight: bold; color: #209cee;">Text: The findings defy all prior assumptions we've held!</p>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/emo_0014.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+        </table>
+        <p class="title is-5" style="font-weight: bold; color: #209cee;">Emotion: Neutral</p>
+        <table class="table is-fullwidth" style="table-layout: fixed">
+          <tr>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Face</th>
+            <th><span style="background-color:#00AC94; color:#fff;padding: 5px;border-radius: 5px;">Generated</span> Speech Utternace</th>
+          </tr>
+          <tr>
+            <td style="text-align: center;">
+              <img src="./static/img/emo_0001.png" alt="Emotional voice synthesis" style="width: 300px;"/>
+            </td>
+            <td style="text-align: center; align-items: center; vertical-align: middle;">
+              <p class="title is-5" style="font-weight: bold; color: #209cee;">Text: The evidence leads us to a different conclusion than expected.              </p>
+              <audio controls style="width: 100%;">
+                <source src="./static/audio/emo_0001.wav" type="audio/wav">
+                Your browser does not support the audio element.
+              </audio>
+            </td>
+        </table>
+        </section>
+  <!-- 
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{park2021nerfies,
+  author    = {Park, Keunhong and Sinha, Utkarsh and Barron, Jonathan T. and Bouaziz, Sofien and Goldman, Dan B and Seitz, Steven M. and Martin-Brualla, Ricardo},
+  title     = {Nerfies: Deformable Neural Radiance Fields},
+  journal   = {ICCV},
+  year      = {2021},
+}</code></pre>
+  </div>
+</section> -->
+
+
+  <footer class="footer">
+    <div class="container">
+      <!-- <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div> -->
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This website is licensed under a <a rel="license"
+                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
+            <p class="is-size-7">
+              Template: <a href="https://github.com/nerfies/nerfies.github.io">Nerfies</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
